@@ -28,7 +28,36 @@ class ListProduits extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Liste de Produits")),
-      body: Center(child: Text("Liste des produits")),
+      body: ListView.builder(
+        itemCount: produits.length,
+        itemBuilder: (context, index) {
+          final produit = produits[index];
+
+          return Card(
+            elevation: 3,
+            margin: EdgeInsets.all(10),
+            child: ListTile(
+              title: Text(
+                produit.nom,
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              subtitle: Text("${produit.prix} \$"),
+              trailing: ElevatedButton(
+                child: Text("Voir"),
+                onPressed: () {
+                  // Navigation vers la page Détails
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DetailsProduit(produit: produit),
+                    ),
+                  );
+                },
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }
